@@ -2,6 +2,9 @@ package com.example.lab2
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -14,6 +17,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map:GoogleMap
     private lateinit var mapView:MapView
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +26,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView = findViewById(R.id.map)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        MobileAds.initialize(this){}
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -40,6 +51,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         map.animateCamera(
             CameraUpdateFactory.newLatLngZoom(coordenadas, 18f), 4500, null
         )
+
     }
 
 
