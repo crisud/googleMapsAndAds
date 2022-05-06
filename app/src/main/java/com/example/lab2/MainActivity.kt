@@ -2,6 +2,9 @@ package com.example.lab2
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -22,9 +25,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView = findViewById(R.id.map)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        MobileAds.initialize(this){}
+        val adView = findViewById<AdView>(R.id.ad)
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
+    override fun onMapReady(googleMap: GoogleMap) { //evento
         map =  googleMap
         //eventos
         map.uiSettings.isZoomControlsEnabled = true
@@ -41,7 +49,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             CameraUpdateFactory.newLatLngZoom(coordenadas, 18f), 4500, null
         )
     }
-
 
     override fun onResume() {
         mapView.onResume()
